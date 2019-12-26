@@ -10,19 +10,19 @@
 #include <pthread.h>
 
 
-struct job
+struct Job
 {
     void* (*callback_function)(void *arg);    //线程回调函数
     void *arg;                                //回调函数参数
-    struct job *next;
+    struct Job *next;
 };
 
-struct threadpool
+struct ThreadPool
 {
     int thread_num;                   //线程池中开启线程的个数
     int queue_max_num;                //队列中最大job的个数
-    struct job *head;                 //指向job的头指针
-    struct job *tail;                 //指向job的尾指针
+    struct Job *head;                 //指向job的头指针
+    struct Job *tail;                 //指向job的尾指针
     pthread_t *pthreads;              //线程池中所有线程的pthread_t
     pthread_mutex_t mutex;            //互斥信号量
     pthread_cond_t queue_empty;       //队列为空的条件变量
@@ -42,8 +42,8 @@ struct threadpool
 //================================================================================================
 void* threadpool_function(void* arg)
 {
-    struct threadpool *pool = (struct threadpool*)arg;
-    struct job *pjob = NULL;
+    struct ThreadPool *pool = (struct ThreadPool*)arg;
+    struct Job *pjob = NULL;
     while (1)  //死循环
     {
         pthread_mutex_lock(&(pool->mutex));
@@ -89,12 +89,12 @@ void* threadpool_function(void* arg)
 //输出：                    无
 //返回：                    成功：线程池地址 失败：NULL
 //================================================================================================
-struct threadpool* threadpool_init(int thread_num, int queue_max_num)
+struct ThreadPool* threadpool_init(int thread_num, int queue_max_num)
 {
-    struct threadpool *pool = NULL;
+    struct ThreadPool *pool = NULL;
     do
     {
-        pool = malloc(sizeof(struct threadpool));
+        pool = malloc(sizeof(struct ThreadPool));
         if (NULL == pool)
         {
             printf("failed to malloc threadpool!\n");
@@ -154,7 +154,7 @@ struct threadpool* threadpool_init(int thread_num, int queue_max_num)
 //输出：                     无
 //返回：                     成功：0 失败：-1
 //================================================================================================
-int threadpool_add_job(struct threadpool* pool, void* (*callback_function)(void *arg), void *arg)
+int threadpool_add_job(struct ThreadPool* pool, void* (*callback_function)(void *arg), void *arg)
 {
     assert(pool != NULL);
     assert(callback_function != NULL);
@@ -170,7 +170,7 @@ int threadpool_add_job(struct threadpool* pool, void* (*callback_function)(void 
         pthread_mutex_unlock(&(pool->mutex));
         return -1;
     }
-    struct job *pjob =(struct job*) malloc(sizeof(struct job));
+    struct Job *pjob =(struct Job*) malloc(sizeof(struct Job));
     if (NULL == pjob)
     {
         pthread_mutex_unlock(&(pool->mutex));
@@ -202,7 +202,7 @@ int threadpool_add_job(struct threadpool* pool, void* (*callback_function)(void 
 //输出：                      无
 //返回：                      成功：0 失败：-1
 //================================================================================================
-int threadpool_destroy(struct threadpool *pool)
+int threadpool_destroy(struct ThreadPool *pool)
 {
     assert(pool != NULL);
     pthread_mutex_lock(&(pool->mutex));
@@ -233,7 +233,7 @@ int threadpool_destroy(struct threadpool *pool)
     pthread_cond_destroy(&(pool->queue_not_empty));
     pthread_cond_destroy(&(pool->queue_not_full));
     free(pool->pthreads);
-    struct job *p;
+    struct Job *p;
     while (pool->head != NULL)
     {
         p = pool->head;

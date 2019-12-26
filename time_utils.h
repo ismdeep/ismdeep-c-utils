@@ -5,6 +5,7 @@
 #ifndef ISMDEEP_C_UTILS_TIME_UTILS_H
 #define ISMDEEP_C_UTILS_TIME_UTILS_H
 
+#include <time.h>
 #include <sys/time.h>
 #include <stdint.h>
 
@@ -43,6 +44,33 @@ uint64_t get_current_timestamp_us() {
     gettimeofday(&t, NULL);
     uint64_t timestamp = (uint64_t)t.tv_sec * 1000000 + t.tv_usec;
     return timestamp;
+}
+
+
+char *current_time() {
+    time_t now;
+    struct tm *timenow;
+    time(&now);
+    timenow = localtime(&now);
+    char *str = (char *) malloc(1024 * sizeof(char));
+    sprintf(str, "%04d-%02d-%02d %02d:%02d:%02d",
+            timenow->tm_year + 1900, timenow->tm_mon + 1, timenow->tm_mday,
+            timenow->tm_hour, timenow->tm_min, timenow->tm_sec
+    );
+    return str;
+}
+
+char *current_time_id() {
+    time_t now;
+    struct tm *time_now;
+    time(&now);
+    time_now = localtime(&now);
+    char *str = (char *) malloc(1024 * sizeof(char));
+    sprintf(str, "%04d%02d%02d%02d%02d%02d",
+            time_now->tm_year + 1900, time_now->tm_mon + 1, time_now->tm_mday,
+            time_now->tm_hour, time_now->tm_min, time_now->tm_sec
+    );
+    return str;
 }
 
 #endif //ISMDEEP_C_UTILS_TIME_UTILS_H

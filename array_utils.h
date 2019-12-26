@@ -5,6 +5,8 @@
 #ifndef ISMDEEP_C_UTILS_ARRAY_UTILS_H
 #define ISMDEEP_C_UTILS_ARRAY_UTILS_H
 
+#include <stdlib.h>
+
 void *create_array(size_t size, size_t sizeof_item) {
     void *arr = malloc(sizeof_item * size);
     return arr;

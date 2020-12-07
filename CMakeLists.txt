@@ -7,3 +7,4 @@ set(CMAKE_C_FLAGS "-W")
 include_directories("include")
 
 add_executable(argv-utils-test tests/argv_utils_test.c)
+add_executable(threadpool-test tests/threadpool_test.c)

@@ -1,11 +1,11 @@
 //
-// Created by ismdeep on 2020/1/4.
+// Created by L. Jiang <l.jiang.1024@gmail.com> on 2020/1/4.
 //
 
 #ifndef ISMDEEP_C_UTILS_STATISTIC_UTILS_H
 #define ISMDEEP_C_UTILS_STATISTIC_UTILS_H
 
-#include <macro_header.h>
+#include "include/ismdeep-c-utils/macro_header.h"
 
 double statistic_avg(double *data, size_t size) {
     double sum = 0.00;

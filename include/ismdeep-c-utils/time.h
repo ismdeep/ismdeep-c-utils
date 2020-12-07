@@ -1,5 +1,5 @@
 //
-// Created by ismdeep on 2019/12/25.
+// Created by L. Jiang <l.jiang.1024@gmail.com> on 2019/12/25.
 //
 
 #ifndef ISMDEEP_C_UTILS_TIME_UTILS_H

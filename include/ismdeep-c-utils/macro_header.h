@@ -1,5 +1,5 @@
 //
-// Created by ismdeep on 2019/12/26.
+// Created by L. Jiang <l.jiang.1024@gmail.com> on 2019/12/26.
 //
 
 #ifndef ISMDEEP_C_UTILS_MACRO_HEADER_H

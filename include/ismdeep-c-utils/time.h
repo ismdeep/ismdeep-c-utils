@@ -5,9 +5,19 @@
 #ifndef ISMDEEP_C_UTILS_TIME_UTILS_H
 #define ISMDEEP_C_UTILS_TIME_UTILS_H
 
+#include <stdlib.h>
+#include <stdio.h>
 #include <time.h>
 #include <sys/time.h>
 #include <stdint.h>
+
+
+#include <sys/time.h>
+#include <stdint.h>
+
+
+#define SLEEP_SECOND(x) usleep(x * 1000 * 1000)
+#define SLEEP_MS(x) usleep(x * 1000)
 
 void create_start_point(struct timeval * t) {
     gettimeofday(t, NULL);
@@ -71,6 +81,27 @@ char *current_time_id() {
             time_now->tm_hour, time_now->tm_min, time_now->tm_sec
     );
     return str;
+}
+
+uint64_t time_s() {
+    struct timeval t;
+    gettimeofday(&t, NULL);
+    return t.tv_sec;
+}
+
+uint64_t time_ms() {
+    struct timeval t;
+    gettimeofday(&t, NULL);
+    uint64_t timestamp = (uint64_t)t.tv_sec * 1000 + t.tv_usec / 1000;
+    return timestamp;
+}
+
+
+uint64_t time_us() {
+    struct timeval t;
+    gettimeofday(&t, NULL);
+    uint64_t timestamp = (uint64_t)t.tv_sec * 1000000 + t.tv_usec;
+    return timestamp;
 }
 
 #endif //ISMDEEP_C_UTILS_TIME_UTILS_H

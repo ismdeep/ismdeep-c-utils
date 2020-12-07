@@ -16,7 +16,7 @@
 #include <stdint.h>
 
 
-#define SLEEP_SECOND(x) usleep(x * 1000 * 1000)
+#define SLEEP_S(x) usleep(x * 1000 * 1000)
 #define SLEEP_MS(x) usleep(x * 1000)
 
 void create_start_point(struct timeval * t) {

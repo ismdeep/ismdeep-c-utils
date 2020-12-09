@@ -28,13 +28,11 @@ struct GF2_Matrix *gf2_matrix_init(size_t _row_, size_t _col_) {
     return matrix;
 }
 
-struct GF2_Matrix *gf2_matrix_mul(const struct GF2_Matrix *matrix_left, const struct GF2_Matrix *matrix_right) {
+void gf2_matrix_mul(const struct GF2_Matrix *matrix_left, const struct GF2_Matrix *matrix_right, struct GF2_Matrix *matrix) {
     if (matrix_left->col != matrix_right->row) {
         fprintf(stderr, "ERROR: gf2_matrix_mul(), matrix_left->col != matrix_right->row\n");
-        return NULL;
+        return;
     }
-
-    struct GF2_Matrix *matrix = gf2_matrix_init(matrix_left->row, matrix_right->col);
 
     for (size_t i = 0; i < matrix->row; ++i) {
         for (size_t j = 0; j < matrix->col; ++j) {
@@ -47,8 +45,6 @@ struct GF2_Matrix *gf2_matrix_mul(const struct GF2_Matrix *matrix_left, const st
             matrix->data[i][j] = tmp & 1ULL;
         }
     }
-
-    return matrix;
 }
 
 char* gf2_matrix_dump(const struct GF2_Matrix *matrix) {

@@ -24,6 +24,9 @@ void *work(void *arg) {
 
 
 int main() {
+
+    uint64_t start_time = time_ms();
+
     struct ThreadPool *pool = threadpool_init(10, 20);
     threadpool_add_job(pool, work, "1");
     threadpool_add_job(pool, work, "2");
@@ -67,7 +70,10 @@ int main() {
     threadpool_add_job(pool, work, "40");
 
     threadpool_destroy(pool);
-    printf("DONE\n");
+
+    uint64_t end_time = time_ms();
+
+    printf("DONE. Time elapse: %llu (ms)\n", end_time - start_time);
 
     return EXIT_SUCCESS;
 }

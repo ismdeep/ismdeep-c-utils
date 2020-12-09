@@ -14,11 +14,12 @@ int main() {
 
     matrix_1->data[0][0] = 1;
 
-    gf2_matrix_display(matrix_1);
+    printf("%s\n", gf2_matrix_dump(matrix_1));
+    printf("%s\n", gf2_matrix_dump(matrix_2));
 
     struct GF2_Matrix *matrix = gf2_matrix_mul(matrix_1, matrix_2);
 
-    gf2_matrix_display(matrix);
+    printf("%s\n", gf2_matrix_dump(matrix));
 
     return EXIT_SUCCESS;
 }

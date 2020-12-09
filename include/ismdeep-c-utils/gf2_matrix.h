@@ -51,13 +51,21 @@ struct GF2_Matrix *gf2_matrix_mul(const struct GF2_Matrix *matrix_left, const st
     return matrix;
 }
 
-void gf2_matrix_display(const struct GF2_Matrix *matrix) {
+char* gf2_matrix_dump(const struct GF2_Matrix *matrix) {
+    char *ans = (char *) malloc(sizeof(char) * 65535);
+    char *tmp = (char *) malloc(sizeof(char) * 65535);
+    memset(ans, 0, sizeof(char) * 65535);
+    memset(tmp, 0, sizeof(char) * 65535);
+
     for (size_t i = 0; i < matrix->row; ++i) {
         for (size_t j = 0; j < matrix->col; ++j) {
-            printf("%d ", matrix->data[i][j]);
+            sprintf(tmp, "%d ", matrix->data[i][j]);
+            strcat(ans, tmp);
         }
-        printf("\n");
+        strcat(ans, "\n");
     }
+    free(tmp);
+    return ans;
 }
 
 #endif //ISMDEEP_C_UTILS_GF2_MATRIX_H

@@ -8,3 +8,4 @@ include_directories("include")
 
 add_executable(argv-utils-test tests/argv_utils_test.c)
 add_executable(threadpool-test tests/threadpool_test.c)
+add_executable(simple-config-test tests/simple_config_test.c)

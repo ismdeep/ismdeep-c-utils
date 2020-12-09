@@ -40,7 +40,7 @@ struct GF2_Matrix *gf2_matrix_mul(const struct GF2_Matrix *matrix_left, const st
         for (size_t j = 0; j < matrix->col; ++j) {
 
             uint64_t tmp = 0;
-            for (size_t k = 0; k < matrix_left->row; k++) {
+            for (size_t k = 0; k < matrix_left->col; k++) {
                 tmp += matrix_left->data[i][k] * matrix_right->data[k][j];
             }
 

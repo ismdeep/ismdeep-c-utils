@@ -105,4 +105,13 @@ uint64_t time_us() {
     return timestamp;
 }
 
+char *unix_time_to_date(int timestamp, char* format) {
+    char*       buf = (char *) malloc(sizeof(char) * 80);
+    // Get current time
+    time_t     unix_time_val = timestamp;
+    struct tm  ts = *localtime(&unix_time_val);
+    strftime(buf, sizeof(buf) * 80, format, &ts);
+    return buf;
+}
+
 #endif //ISMDEEP_C_UTILS_TIME_UTILS_H

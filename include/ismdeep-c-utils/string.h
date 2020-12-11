@@ -5,7 +5,10 @@
 #ifndef ISMDEEP_C_UTILS_STRING_UTILS_H
 #define ISMDEEP_C_UTILS_STRING_UTILS_H
 
+#include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
 
 struct IString {
     char *data;
@@ -19,9 +22,8 @@ char *int_to_string(int val) {
 }
 
 int string_to_int(const char *str) {
-    int val;
-    sscanf(str,"%d", &val);
-    return val;
+    int ans = (int) strtol(str, NULL, 10);
+    return ans;
 }
 
 char *strip(const char *_line_args_) {

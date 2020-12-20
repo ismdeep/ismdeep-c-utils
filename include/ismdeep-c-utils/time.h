@@ -13,10 +13,6 @@
 #include <stdint.h>
 
 
-#include <sys/time.h>
-#include <stdint.h>
-
-
 #define SLEEP_S(x) usleep(x * 1000 * 1000)
 #define SLEEP_MS(x) usleep(x * 1000)
 

@@ -15,7 +15,8 @@ struct GF2_Matrix {
     uint8_t **data;
 };
 
-struct GF2_Matrix *gf2_matrix_init(size_t _row_, size_t _col_) {
+
+struct GF2_Matrix *gf2_matrix_create(size_t _row_, size_t _col_) {
     struct GF2_Matrix *matrix = (struct GF2_Matrix *) malloc(sizeof(struct GF2_Matrix) * 1);
     matrix->row = _row_;
     matrix->col = _col_;
@@ -28,7 +29,10 @@ struct GF2_Matrix *gf2_matrix_init(size_t _row_, size_t _col_) {
     return matrix;
 }
 
-void gf2_matrix_mul(const struct GF2_Matrix *matrix_left, const struct GF2_Matrix *matrix_right, struct GF2_Matrix *matrix) {
+void gf2_matrix_mul(
+        const struct GF2_Matrix *matrix_left, const struct GF2_Matrix *matrix_right,
+        struct GF2_Matrix *matrix
+) {
     if (matrix_left->col != matrix_right->row) {
         fprintf(stderr, "ERROR: gf2_matrix_mul(), matrix_left->col != matrix_right->row\n");
         return;
@@ -47,7 +51,14 @@ void gf2_matrix_mul(const struct GF2_Matrix *matrix_left, const struct GF2_Matri
     }
 }
 
-char* gf2_matrix_dump(const struct GF2_Matrix *matrix) {
+struct GF2_Matrix *gf2_matrix_mul_func(const struct GF2_Matrix *matrix_left, const struct GF2_Matrix *matrix_right) {
+    struct GF2_Matrix *matrix = gf2_matrix_create(matrix_left->row, matrix_right->col);
+    gf2_matrix_mul(matrix_left, matrix_right, matrix);
+    return matrix;
+}
+
+
+char *gf2_matrix_dump(const struct GF2_Matrix *matrix) {
     char *ans = (char *) malloc(sizeof(char) * 65535);
     char *tmp = (char *) malloc(sizeof(char) * 65535);
     memset(ans, 0, sizeof(char) * 65535);
@@ -62,6 +73,40 @@ char* gf2_matrix_dump(const struct GF2_Matrix *matrix) {
     }
     free(tmp);
     return ans;
+}
+
+void gf2_matrix_save(const struct GF2_Matrix *matrix, const char *file_path) {
+    FILE *fp = fopen(file_path, "w");
+    fprintf(fp, "%ld %ld\n", matrix->row, matrix->col);
+    char *str = gf2_matrix_dump(matrix);
+    fprintf(fp, "%s", str);
+    free(str);
+    fclose(fp);
+    fp = NULL;
+}
+
+struct GF2_Matrix *gf2_matrix_load(const char *file_path) {
+    FILE *fp = fopen(file_path, "r");
+    if (fp == NULL) {
+        fprintf(stderr, "ERROR: Failed to open file. [%s]\n", file_path);
+        return NULL;
+    }
+
+    size_t row, col;
+
+    fscanf(fp, "%ld %ld", &row, &col);
+    int tmp;
+    struct GF2_Matrix *matrix = gf2_matrix_create(row, col);
+    for (size_t i = 0; i < row; ++i) {
+        for (size_t j = 0; j < col; ++j) {
+            fscanf(fp, "%d", &tmp);
+            matrix->data[i][j] = tmp;
+        }
+    }
+
+    fclose(fp);
+    fp = NULL;
+    return matrix;
 }
 
 #endif //ISMDEEP_C_UTILS_GF2_MATRIX_H

@@ -54,9 +54,12 @@ void test_load_and_mul() {
 
     struct GF2_Matrix *msg = gf2_matrix_create(1, 4);
 
+    srandom(time_us());
     set_random_data(msg);
 
     struct GF2_Matrix *code = gf2_matrix_mul_func(msg, G);
+
+    code->data[0][0] = 1 - code->data[0][0];
 
     struct GF2_Matrix *msg2 = gf2_matrix_mul_func(code, H);
 

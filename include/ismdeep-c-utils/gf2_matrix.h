@@ -57,6 +57,23 @@ struct GF2_Matrix *gf2_matrix_mul_func(const struct GF2_Matrix *matrix_left, con
     return matrix;
 }
 
+void gf2_matrix_copy(const struct GF2_Matrix *matrix_from, struct GF2_Matrix *matrix_to) {
+    if (matrix_from->row != matrix_to->row || matrix_from->col != matrix_to->col) {
+        fprintf(stderr, "ERROR: gf2_matrix_copy() with wrong size.");
+        return;
+    }
+    for (size_t i = 0; i < matrix_from->row; i++) {
+        for (size_t j = 0; j < matrix_from->col; j++) {
+            matrix_to->data[i][j] = matrix_from->data[i][j];
+        }
+    }
+}
+
+struct GF2_Matrix *gf2_matrix_copy_func(const struct GF2_Matrix *matrix) {
+    struct GF2_Matrix *matrix_copied = gf2_matrix_create(matrix->row, matrix->col);
+    gf2_matrix_copy(matrix, matrix_copied);
+    return matrix_copied;
+}
 
 char *gf2_matrix_dump(const struct GF2_Matrix *matrix) {
     char *ans = (char *) malloc(sizeof(char) * 65535);

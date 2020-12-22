@@ -25,6 +25,8 @@ add_executable(argv-utils-test tests/argv_utils_test.c)
 target_link_libraries(argv-utils-test ismdeep-c-utils)
 
 add_executable(threadpool-test tests/threadpool_test.c)
+target_link_libraries(threadpool-test ismdeep-c-utils)
+
 add_executable(simple-config-test tests/simple_config_test.c)
 
 add_executable(gf2-matrix-test tests/gf2_matrix_test.c)

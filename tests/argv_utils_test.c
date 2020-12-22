@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <ismdeep-c-utils/argv.h>
 
-int main(int argc, char *argv[]) {
+int main(int argc, const char *argv[]) {
     if (argv_exist_switch(argc, argv, "--help")) {
         printf("--help FOUND.\n");
     } else {

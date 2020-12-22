@@ -11,14 +11,13 @@
 
 #include "gf2_matrix.h"
 
-void write_msg(const struct GF2_Matrix *msg, const char *str, size_t start_bit) {
+void write_msg(const struct GF2_Matrix *msg, const unsigned char *str, size_t len, size_t start_bit) {
     for (size_t i = 0; i < msg->row; ++i) {
         for (size_t j = 0; j < msg->col; ++j) {
             msg->data[i][j] = 0;
         }
     }
 
-    size_t len = strlen(str);
     size_t cursor = start_bit;
     size_t r;
 
@@ -29,15 +28,11 @@ void write_msg(const struct GF2_Matrix *msg, const char *str, size_t start_bit) 
             }
 
             r = cursor % 8;
-            char ch = str[cursor / 8];
+            unsigned char ch = str[cursor / 8];
             msg->data[i][j] = (ch & (1UL << r)) >> r;
 
             ++cursor;
         }
-    }
-
-    for (size_t i = start_bit / 8; i < len; i++) {
-
     }
 }
 

@@ -17,6 +17,20 @@ const char *get_argv(int argc, const char *argv[], const char *search_key) {
     return "";
 }
 
+int get_argv_int(int argc, const char *argv[], const char *search_key) {
+    const char *tmp = get_argv(argc, argv, search_key);
+    int ans = atoi(tmp);
+    return ans;
+}
+
+uint64_t get_argv_uint64_t(int argc, const char *argv[], const char *search_key) {
+    const char *tmp = get_argv(argc, argv, search_key);
+    uint64_t ans;
+    sscanf(tmp, "%llu", &ans);
+    return ans;
+}
+
+
 
 bool argv_exist_switch(int argc, const char *argv[], const char *search_key) {
     for (int i = 0; i < argc; ++i) {

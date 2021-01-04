@@ -37,7 +37,7 @@ char *strip(const char *_line_args_) {
     size_t left = 0;
     size_t right = strlen(line) - 1;
     while (left < strlen(line) && (line[left] == ' ' || line[left] == '\t' || line[left] == '\n')) left++;
-    while (right >= 0 && ((line[right] == ' ' || line[right] == '\t' || line[right] == '\n'))) right--;
+    while (line[right] == ' ' || line[right] == '\t' || line[right] == '\n') right--;
 
     if (right < left) {
         return "";
@@ -54,10 +54,10 @@ struct IString *get_lines(const char *_content_) {
     char *content = (char *) malloc(sizeof(char) * (strlen(_content_) + 5));
     strcpy(content, _content_);
     content[strlen(content)] = '\0';
-    content[strlen(content)+1] = '\0';
+    content[strlen(content) + 1] = '\0';
     content[strlen(content)] = '\n';
 
-    size_t  line_cnt = 0;
+    size_t line_cnt = 0;
     for (size_t i = 0; i < strlen(content); i++) {
         ++line_cnt;
     }

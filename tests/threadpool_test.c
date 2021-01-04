@@ -7,6 +7,8 @@
 #include <ismdeep-c-utils/threadpool.h>
 #include <ismdeep-c-utils/time.h>
 
+#include <inttypes.h>
+
 uint64_t fib(uint64_t n) {
     if (n <= 1) {
         return 1;
@@ -18,7 +20,7 @@ uint64_t fib(uint64_t n) {
 void *work(void *arg) {
     char *p = (char *) arg;
     uint64_t ans = fib(40);
-    printf("%p %s threadpool callback function. fib(40) = %llu\n", pthread_self(), p, ans);
+    printf("%"PRIx64" %s threadpool callback function. fib(40) = %"PRIu64"\n", pthread_self(), p, ans);
     return NULL;
 }
 

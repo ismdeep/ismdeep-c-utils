@@ -4,9 +4,12 @@ project(ismdeep-c-utils)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_FLAGS "-W")
+set(CMAKE_C_FLAGS "-lpthread")
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "-W")
+set(CMAKE_CXX_FLAGS "-std=c++0x")
+set(CMAKE_CXX_FLAGS "-lpthread")
 
 include_directories("include")
 

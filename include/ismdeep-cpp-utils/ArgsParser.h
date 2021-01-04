@@ -6,6 +6,7 @@
 #define ISMDEEP_C_UTILS_ARGSPARSER_H
 
 #include <cstdlib>
+#include <cstddef>
 #include <string>
 
 #include "../ismdeep-c-utils/argv.h"

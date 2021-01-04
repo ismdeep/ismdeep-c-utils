@@ -8,8 +8,9 @@
 #include <stdint.h>
 
 #define TIMES(id, size) for(uint64_t id = 0; id < (size); ++id)
+#define LOOP(type, id, size) for(type id = 0; id < (size); ++id)
 
-#define MIN(x,y) (((x) < (y) ? (x) : (y)))
-#define MAX(x,y) (((x) > (y) ? (x) : (y)))
+#define MIN(x, y) (((x) < (y) ? (x) : (y)))
+#define MAX(x, y) (((x) > (y) ? (x) : (y)))
 
 #endif //ISMDEEP_C_UTILS_MACRO_HEADER_H

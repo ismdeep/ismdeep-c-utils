@@ -18,5 +18,20 @@ int main() {
 
     printf("%"PRIu64, v);
 
+    printf("[%s]\n", strip("  "));
+
+    printf("[%s]\n", strip("a  "));
+
+    printf("[%s]\n", strip("  a"));
+
+    printf("[%s]\n", strip(" a "));
+
+
+    /* split */
+    char **items = split("hello,world,,", ',');
+    for (size_t i = 0; items[i] != NULL; i++) {
+        printf("[%s]\n", items[i]);
+    }
+
     return EXIT_SUCCESS;
 }

@@ -15,7 +15,6 @@ struct GF2_Matrix {
     uint8_t **data;
 };
 
-
 struct GF2_Matrix *gf2_matrix_create(size_t _row_, size_t _col_) {
     struct GF2_Matrix *matrix = (struct GF2_Matrix *) malloc(sizeof(struct GF2_Matrix) * 1);
     matrix->row = _row_;
@@ -27,6 +26,14 @@ struct GF2_Matrix *gf2_matrix_create(size_t _row_, size_t _col_) {
         }
     }
     return matrix;
+}
+
+void gf2_matrix_destroy(struct GF2_Matrix *matrix) {
+    for (size_t i = 0; i < matrix->row; i++) {
+        free(matrix->data[i]);
+    }
+    free(matrix->data);
+    free(matrix);
 }
 
 struct GF2_Matrix *gf2_matrix_eye(size_t size) {

@@ -28,3 +28,5 @@ add_executable(string-test tests/string_test.c)
 add_executable(gf2-qc-encoder-test tests/gf2_qc_encoder_test.c)
 
 add_executable(args-parser-test tests/args_parser_test.cpp)
+
+add_executable(interval-test tests/interval_test.c)

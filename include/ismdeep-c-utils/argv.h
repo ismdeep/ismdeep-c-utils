@@ -33,13 +33,17 @@ uint64_t get_argv_uint64_t(int argc, const char *argv[], const char *search_key)
 
 
 
-bool argv_exist_switch(int argc, const char *argv[], const char *search_key) {
+bool argv_switch_exist(int argc, const char *argv[], const char *search_key) {
     for (int i = 0; i < argc; ++i) {
         if (strcmp(argv[i], search_key) == 0) {
             return true;
         }
     }
     return false;
+}
+
+bool argv_switch_not_exist(int argc, const char *argv[], const char *search_key) {
+    return !argv_switch_exist(argc, argv, search_key);
 }
 
 #endif //ISMDEEP_C_UTILS_ARGV_UTILS_H

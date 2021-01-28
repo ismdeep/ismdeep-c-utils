@@ -51,7 +51,7 @@ std::string ArgsParser::get_string(const char *search_key) {
 }
 
 bool ArgsParser::has(const char *search_key) {
-    return argv_exist_switch(this->argc, this->argv, search_key);
+    return argv_switch_exist(this->argc, this->argv, search_key);
 }
 
 

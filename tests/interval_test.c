@@ -35,11 +35,11 @@ void test_with_multi_thread() {
     int thread_size = 4;
     pthread_t *threads = (pthread_t *) malloc(sizeof(pthread_t) * thread_size);
 
-    LOOP(int, thread_id, thread_size) {
+    LOOP_d(thread_id, thread_size) {
         pthread_create(&threads[thread_id], NULL, (void *(*)(void *)) thread_run, NULL);
     }
 
-    LOOP(int, thread_id, thread_size) {
+    LOOP_d(thread_id, thread_size) {
         printf("thread_id join -> %d\n", thread_id);
         pthread_join(threads[thread_id], NULL);
     }

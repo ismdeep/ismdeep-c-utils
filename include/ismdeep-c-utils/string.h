@@ -64,7 +64,7 @@ char *strip(const char *str) {
 
 char **split(const char *str, char sep) {
     size_t cnt = 0;
-    LOOP(size_t, i, strlen(str)) {
+    LOOP_zu(i, strlen(str)) {
         if (str[i] == sep) {
             ++cnt;
         }
@@ -72,17 +72,17 @@ char **split(const char *str, char sep) {
     ++cnt;
 
     char **items = (char **) malloc(sizeof(char *) * (cnt + 1));
-    LOOP(size_t, i, cnt + 1) {
+    LOOP_zu(i, cnt + 1) {
         items[i] = NULL;
     }
 
     size_t left = 0;
     size_t index = 0;
-    LOOP(size_t, cursor, strlen(str)) {
+    LOOP_zu(cursor, strlen(str)) {
         if (str[cursor] == sep) {
             char *s = (char *) malloc(sizeof(cursor - left + 1));
             memset(s, 0, sizeof(cursor - left + 1));
-            LOOP(size_t, i, cursor - left) {
+            LOOP_zu(i, cursor - left) {
                 s[i] = str[left + i];
             }
             left = cursor + 1;
@@ -92,7 +92,7 @@ char **split(const char *str, char sep) {
 
     char *s = (char *) malloc(sizeof(strlen(str) - left + 1));
     memset(s, 0, sizeof(strlen(str) - left + 1));
-    LOOP(size_t, i, strlen(str) - left) {
+    LOOP_zu(i, strlen(str) - left) {
         s[i] = str[left + i];
     }
     items[index] = s;

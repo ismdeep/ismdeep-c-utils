@@ -7,8 +7,11 @@
 
 #include <stdint.h>
 
-#define TIMES(id, size) for(uint64_t id = 0; id < (size); ++id)
 #define LOOP(type, id, size) for(type id = 0; id < (size); ++id)
+#define TIMES_zu(id, size) LOOP(size_t, id, size)
+#define TIMES_d(id, size) LOOP(int, id, size)
+#define TIMES_ull(id, size) LOOP(uint64_t, id, size)
+
 
 #define MIN(x, y) (((x) < (y) ? (x) : (y)))
 #define MAX(x, y) (((x) > (y) ? (x) : (y)))

@@ -18,7 +18,7 @@
  * @return
  */
 bool combine_has_next(uint64_t n, uint64_t k, const uint64_t *a) {
-    TIMES(i, k) {
+    LOOP_ull(i, k) {
         if (a[i] != n - k + i) {
             return true;
         }
@@ -27,7 +27,7 @@ bool combine_has_next(uint64_t n, uint64_t k, const uint64_t *a) {
 }
 
 void combine_init(uint64_t k, uint64_t *a) {
-    TIMES(i, k) {
+    LOOP_ull(i, k) {
         a[i] = i;
     }
 }

@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <string.h>
+#include <inttypes.h>
 
 
 #define SLEEP_S(x) usleep(x * 1000 * 1000)

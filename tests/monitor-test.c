@@ -7,11 +7,11 @@
 #include <ismdeep-c-utils/monitor-util.h>
 #include <ismdeep-c-utils/time.h>
 
-uint64_t start_time_s;
+uint64_t start_time_us;
 int val;
 
 void show_msg() {
-    printf("\r%"PRIu64" -> %d", time_s() - start_time_s, val);
+    printf("\r%s -> %d", time_human_text(time_us() - start_time_us), val);
     fflush(stdout);
 }
 
@@ -21,7 +21,7 @@ uint64_t fib(int n) {
 
 int main() {
     struct Monitor *monitor = monitor_create(show_msg, 200);
-    start_time_s = time_s();
+    start_time_us = time_us();
     monitor_start(monitor);
 
     for (int i = 0; i < 44; i++) {

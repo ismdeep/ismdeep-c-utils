@@ -41,39 +41,11 @@ void monitor_pthread_runner(struct Monitor *monitor) {
 
     uint64_t end_time_us = time_us();
 
-    uint64_t interval_time = end_time_us - monitor->start_time_us;
-    if (interval_time <= 1000ULL) {
-        printf("Time elapses: %"PRIu64" (us)\n", interval_time);
-        return;
-    }
+    uint64_t interval_time_us = end_time_us - monitor->start_time_us;
 
-    interval_time /= 1000ULL;
-    if (interval_time <= 1000ULL) {
-        printf("Time elapses: %"PRIu64" (ms)\n", interval_time);
-        return;
-    }
-
-    double interval_time_f = interval_time;
-    interval_time_f /= 1000.00;
-    if (interval_time_f <= 60.00) {
-        printf("Time elapses: %.2lf (s)\n", interval_time_f);
-        return;
-    }
-
-    interval_time_f /= 60.00;
-    if (interval_time_f <= 60) {
-        printf("Time elapses: %.2lf (mins)\n", interval_time_f);
-        return;
-    }
-
-    interval_time_f /= 60.0;
-    if (interval_time_f <= 24) {
-        printf("Time elapses: %.2lf (hours)\n", interval_time_f);
-        return;
-    }
-
-    interval_time_f /= 24.0;
-    printf("Time elapses: %.2lf (days)\n", interval_time_f);
+    char *str = time_human_text(interval_time_us);
+    printf("Time elapses: %s\n", str);
+    free(str);
 }
 
 struct Monitor *monitor_create(monitor_func_t func, useconds_t sleep_time_ms) {

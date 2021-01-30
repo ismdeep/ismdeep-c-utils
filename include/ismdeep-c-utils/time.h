@@ -11,20 +11,21 @@
 #include <sys/time.h>
 #include <unistd.h>
 #include <stdint.h>
+#include <string.h>
 
 
 #define SLEEP_S(x) usleep(x * 1000 * 1000)
 #define SLEEP_MS(x) usleep(x * 1000)
 
-void create_start_point(struct timeval * t) {
+void create_start_point(struct timeval *t) {
     gettimeofday(t, NULL);
 }
 
 uint64_t stop_watch_us(struct timeval t1) {
     struct timeval t2;
     gettimeofday(&t2, NULL);
-    uint64_t timestamp1 = (uint64_t)t1.tv_sec * 1000000 + t1.tv_usec;
-    uint64_t timestamp2 = (uint64_t)t2.tv_sec * 1000000 + t2.tv_usec;
+    uint64_t timestamp1 = (uint64_t) t1.tv_sec * 1000000 + t1.tv_usec;
+    uint64_t timestamp2 = (uint64_t) t2.tv_sec * 1000000 + t2.tv_usec;
     return timestamp2 - timestamp1;
 }
 
@@ -41,7 +42,7 @@ uint64_t get_current_timestamp_s() {
 uint64_t get_current_timestamp_ms() {
     struct timeval t;
     gettimeofday(&t, NULL);
-    uint64_t timestamp = (uint64_t)t.tv_sec * 1000 + t.tv_usec / 1000;
+    uint64_t timestamp = (uint64_t) t.tv_sec * 1000 + t.tv_usec / 1000;
     return timestamp;
 }
 
@@ -49,7 +50,7 @@ uint64_t get_current_timestamp_ms() {
 uint64_t get_current_timestamp_us() {
     struct timeval t;
     gettimeofday(&t, NULL);
-    uint64_t timestamp = (uint64_t)t.tv_sec * 1000000 + t.tv_usec;
+    uint64_t timestamp = (uint64_t) t.tv_sec * 1000000 + t.tv_usec;
     return timestamp;
 }
 
@@ -89,7 +90,7 @@ uint64_t time_s() {
 uint64_t time_ms() {
     struct timeval t;
     gettimeofday(&t, NULL);
-    uint64_t timestamp = (uint64_t)t.tv_sec * 1000 + t.tv_usec / 1000;
+    uint64_t timestamp = (uint64_t) t.tv_sec * 1000 + t.tv_usec / 1000;
     return timestamp;
 }
 
@@ -97,17 +98,76 @@ uint64_t time_ms() {
 uint64_t time_us() {
     struct timeval t;
     gettimeofday(&t, NULL);
-    uint64_t timestamp = (uint64_t)t.tv_sec * 1000000 + t.tv_usec;
+    uint64_t timestamp = (uint64_t) t.tv_sec * 1000000 + t.tv_usec;
     return timestamp;
 }
 
-char *unix_time_to_date(int timestamp, char* format) {
-    char*       buf = (char *) malloc(sizeof(char) * 80);
+char *unix_time_to_date(int timestamp, char *format) {
+    char *buf = (char *) malloc(sizeof(char) * 80);
     // Get current time
-    time_t     unix_time_val = timestamp;
-    struct tm  ts = *localtime(&unix_time_val);
+    time_t unix_time_val = timestamp;
+    struct tm ts = *localtime(&unix_time_val);
     strftime(buf, sizeof(buf) * 80, format, &ts);
     return buf;
+}
+
+char *time_human_text(uint64_t interval_time_us) {
+    char *str = (char *) malloc(sizeof(char) * 64);
+    if (interval_time_us <= 1000) {
+        sprintf(str, "%"PRIu64" (us)", interval_time_us);
+        return str;
+    }
+
+    uint64_t interval_time_ms = interval_time_us / 1000ULL;
+    if (interval_time_ms <= 1000) {
+        sprintf(str, "%"PRIu64" (ms)", interval_time_ms);
+        return str;
+    }
+
+    uint64_t interval_time_s;
+    uint64_t interval_time_min;
+    uint64_t interval_time_hour;
+    uint64_t interval_time_day;
+
+    interval_time_s = interval_time_ms / 1000ULL;
+    interval_time_ms %= 1000ULL;
+
+    interval_time_min = interval_time_s / 60ULL;
+    interval_time_s %= 60ULL;
+
+    interval_time_hour = interval_time_min / 60ULL;
+    interval_time_min %= 60ULL;
+
+    interval_time_day = interval_time_hour / 24ULL;
+    interval_time_hour %= 24ULL;
+
+    bool started = false;
+
+    if (interval_time_day > 0) {
+        started = true;
+        char tmp[60];
+        sprintf(tmp, "%"PRIu64"d ", interval_time_day);
+        strcat(str, tmp);
+    }
+
+    if (interval_time_hour > 0 || started) {
+        started = true;
+        char tmp[60];
+        sprintf(tmp, "%02"PRIu64":", interval_time_hour);
+        strcat(str, tmp);
+    }
+
+    if (interval_time_min > 0 || started) {
+        started = true;
+        char tmp[60];
+        sprintf(tmp, "%02"PRIu64":", interval_time_min);
+        strcat(str, tmp);
+    }
+
+    char tmp[60];
+    sprintf(tmp, "%02"PRIu64".%03"PRIu64, interval_time_s, interval_time_ms);
+    strcat(str, tmp);
+    return str;
 }
 
 

@@ -44,7 +44,7 @@ void monitor_pthread_runner(struct Monitor *monitor) {
     uint64_t interval_time_us = end_time_us - monitor->start_time_us;
 
     char *str = time_human_text(interval_time_us);
-    printf("Time elapses: %s\n", str);
+    printf("Time elapse: %s\n", str);
     free(str);
 }
 

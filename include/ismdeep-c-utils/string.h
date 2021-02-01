@@ -46,8 +46,6 @@ char *strip(const char *str) {
         --right;
     }
 
-    printf("left: %zu    right:%zu\n", left, right);
-
     if (right < left) {
         return "";
     }

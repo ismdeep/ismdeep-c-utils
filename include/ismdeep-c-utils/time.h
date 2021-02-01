@@ -116,13 +116,13 @@ char *unix_time_to_date(int timestamp, char *format) {
 char *time_human_text(uint64_t interval_time_us) {
     char *str = (char *) malloc(sizeof(char) * 64);
     if (interval_time_us <= 1000) {
-        sprintf(str, "%"PRIu64" (us)", interval_time_us);
+        sprintf(str, "%" PRIu64 " (us)", interval_time_us);
         return str;
     }
 
     uint64_t interval_time_ms = interval_time_us / 1000ULL;
     if (interval_time_ms <= 1000) {
-        sprintf(str, "%"PRIu64" (ms)", interval_time_ms);
+        sprintf(str, "%" PRIu64 " (ms)", interval_time_ms);
         return str;
     }
 
@@ -148,26 +148,26 @@ char *time_human_text(uint64_t interval_time_us) {
     if (interval_time_day > 0) {
         started = true;
         char tmp[60];
-        sprintf(tmp, "%"PRIu64"d ", interval_time_day);
+        sprintf(tmp, "%" PRIu64 "d ", interval_time_day);
         strcat(str, tmp);
     }
 
     if (interval_time_hour > 0 || started) {
         started = true;
         char tmp[60];
-        sprintf(tmp, "%02"PRIu64":", interval_time_hour);
+        sprintf(tmp, "%02" PRIu64 ":", interval_time_hour);
         strcat(str, tmp);
     }
 
     if (interval_time_min > 0 || started) {
         started = true;
         char tmp[60];
-        sprintf(tmp, "%02"PRIu64":", interval_time_min);
+        sprintf(tmp, "%02" PRIu64 ":", interval_time_min);
         strcat(str, tmp);
     }
 
     char tmp[60];
-    sprintf(tmp, "%02"PRIu64".%03"PRIu64, interval_time_s, interval_time_ms);
+    sprintf(tmp, "%02" PRIu64 ".%03" PRIu64, interval_time_s, interval_time_ms);
     strcat(str, tmp);
     return str;
 }
